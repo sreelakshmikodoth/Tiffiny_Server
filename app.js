@@ -72,10 +72,16 @@ app.use((error, req, res, next) => {
 });
 
 const clients = {};
+app.set( 'port', ( process.env.PORT || 3002 ));
+
+// Start node server
+app.listen( app.get( 'port' ), function() {
+  console.log( 'Node server is running on port ' + app.get( 'port' ));
+  });
 
 const dbConnect = async () => {
   
-console.log(process.env)
+console.log("processssssssssssssssssssss",process.env)
   try {
     const dbresult=await mongoose.connect(
     `mongodb+srv://slk:slk123@cluster0.d0twn.mongodb.net/tiffinyApp?retryWrites=true&w=majority`, {
