@@ -3,7 +3,7 @@
     "MONGO_USER": "slk",
     "MONGO_PASSWORD": "slk123",
     "MONGO_DATABASE": "tiffinyApp",
-    "API_KEY":"http://localhost:3002",
+    "API_KEY":"https://tiffinyserver.herokuapp.com",
     "SENDGRID_KEY": "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"
    
   }
