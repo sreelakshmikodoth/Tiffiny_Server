@@ -109,6 +109,7 @@ console.log(process.env)
   }
     console.log("db connection established");
   } catch (err) {
+    console.log("process",process.env);
     console.log("db error");
   }
 };
