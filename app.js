@@ -84,7 +84,7 @@ const dbConnect = async () => {
 console.log("processssssssssssssssssssss",process.env)
   try {
     const dbresult=await mongoose.connect(
-    `mongodb+srv://slk:slk123@cluster0.d0twn.mongodb.net/tiffinyApp?retryWrites=true&w=majority`, {
+     `mongodb+srv://slk:slk123@cluster0.d0twn.mongodb.net/tiffinyApp?retryWrites=true&w=majority`, {
 			useNewUrlParser: true,
 			useCreateIndex: true,
 			useFindAndModify: false,
