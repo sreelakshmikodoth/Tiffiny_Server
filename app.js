@@ -75,9 +75,9 @@ const clients = {};
 app.set( 'port', ( process.env.PORT || 3002 ));
 
 // Start node server
-app.listen( app.get( 'port' ), function() {
-  console.log( 'Node server is running on port ' + app.get( 'port' ));
-  });
+// app.listen( app.get( 'port' ), function() {
+//   console.log( 'Node server is running on port ' + app.get( 'port' ));
+//   });
 
 const dbConnect = async () => {
   
@@ -93,7 +93,7 @@ console.log("processssssssssssssssssssss",process.env)
   );
   if (dbresult){
       console.log("Connected to db");
-    const server = app.listen(process.env.PORT || 3002);
+    const server = app.listen(app.get( 'port' ));
     const io = require("./util/socket").init(server);
     io.on("connection", (socket) => {
       socket.on("add-user", (data) => {
