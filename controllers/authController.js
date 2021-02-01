@@ -68,7 +68,7 @@ console.log("Process",process.env)
         subject: "Verify your Account on Tiffiny",
         html: `
                       <p>Please verify your email by clicking on the link below - Tiffiny</p>
-                      <p>Click this <a href="${process.env.API_KEY}/auth/verify/${token}">link</a> to verify your account.</p>
+                      <p>Click this <a href="https://tiffinyserverapp.herokuapp.com//auth/verify/${token}">link</a> to verify your account.</p>
                     `,
       });
       res.status(201).json({
@@ -230,7 +230,7 @@ exports.signupSeller = (req, res, next) => {
         subject: "Verify your Account on Tiffiny",
         html: `
                       <p>Please verify your email by clicking on the link below - Tiffiny</p>
-                      <p>Click this <a href="${process.env.API_KEY}/auth/verify/${token}">link</a> to verify your account.</p>
+                      <p>Click this <a href="https://tiffinyserverapp.herokuapp.com//auth/verify/${token}">link</a> to verify your account.</p>
                     `,
       });
       res.status(201).json({
