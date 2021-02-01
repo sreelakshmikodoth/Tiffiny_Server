@@ -21,6 +21,7 @@ const fileStorage = multer.diskStorage({
     );
   },
 });
+console.log("this is first");
 
 const fileFilter = (req, file, cb) => {
   if (
