@@ -62,6 +62,7 @@ exports.createItem = (req, res, next) => {
           res.status(201).json({
             message: "Item created, hurray!",
             item: item,
+            files:req.files,
             creator: { _id: creator._id, name: creator.name }
           });
         });
@@ -121,7 +122,7 @@ exports.editItem = (req, res, next) => {
   let arrayFiles = [];
 
   arrayFiles = req.files.map(pic => {
-    return pic.path;
+    return pic.location;
   });
 
   const title = req.body.title;
@@ -168,7 +169,8 @@ exports.editItem = (req, res, next) => {
     .then(updatedItem => {
       res.status(200).json({
         message: "Item updated",
-        item: updatedItem
+        item: updatedItem,
+        files:req.files
       });
     })
     .catch(err => {

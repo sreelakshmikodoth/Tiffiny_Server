@@ -170,7 +170,7 @@ exports.signupSeller = (req, res, next) => {
   }
   let arrayFiles = [];
      arrayFiles = req.files.map((pic)=>{
-        return pic.path
+        return pic.location
 
       })
   const { email,name,password,tags,role,payment,minOrderAmount,costForOne,phoneNo,street,aptName,formattedAddress,lat,lng,locality,zip} =req.body;
@@ -237,6 +237,8 @@ exports.signupSeller = (req, res, next) => {
         message:
           "Seller signed-up successfully, please verify your email before logging in.",
         sellerId: savedSeller._id,
+        files:req.files
+
       });
     
 
@@ -255,7 +257,7 @@ exports.imagesTest = (req, res, next) => {
     throw error;
   }
 
-  const arrayFiles = req.files.map((file) => file.path);
+  const arrayFiles = req.files.map((file) => file.location);
 
   res.status(200).json({ message: "success" });
 };

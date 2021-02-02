@@ -4,6 +4,9 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const multer = require("multer");
+const multerS3 = require("multer-s3");
+const aws = require('aws-sdk')
+
 require('dotenv').config()
 
 const authRoutes = require("./routes/auth");
@@ -36,6 +39,25 @@ const fileFilter = (req, file, cb) => {
 const app = express();
 
 const upload = multer({ storage: fileStorage, fileFilter: fileFilter });
+const s3 = new aws.S3({
+  accessKeyId:"AKIAJ3YC7ZTGNJQROV7A",
+secretAccessKey:"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"
+ })
+
+
+const uploadS3 = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'tiffinyapp',
+    acl: 'public-read',
+    metadata: function (req, file, cb) {
+      cb(null, {fieldName: file.fieldname});
+    },
+    key: function (req, file, cb) {
+      cb(null,Math.floor(Math.random() * 90000) + 10000 + "-" + file.originalname)
+    }
+  })
+})
 
 app.use(bodyParser.json());
 app.use("/images", express.static(path.join(__dirname, "images")));
@@ -51,8 +73,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/auth", upload.array("images", 10), authRoutes);
-app.use("/seller", upload.array("image",10), itemRoutes);
+app.use("/auth", uploadS3.array("images", 10), authRoutes);
+app.use("/seller", uploadS3.array("image",10), itemRoutes);
 app.use(userRoutes);
 
 //error middleware
