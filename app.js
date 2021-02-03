@@ -24,7 +24,6 @@ const fileStorage = multer.diskStorage({
     );
   },
 });
-console.log("this is first");
 
 const fileFilter = (req, file, cb) => {
   if (
@@ -40,8 +39,8 @@ const app = express();
 
 const upload = multer({ storage: fileStorage, fileFilter: fileFilter });
 const s3 = new aws.S3({
-  accessKeyId:"AKIAJ3YC7ZTGNJQROV7A",
-secretAccessKey:"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"
+  accessKeyId:process.env.AWS_ACCESSKEYID,
+secretAccessKey:process.env.AWS_SECRETACCESSKEY
  })
 
 
@@ -58,6 +57,13 @@ const uploadS3 = multer({
     }
   })
 })
+
+exports.deleteImg = (filekey)=>{
+  s3.deleteObject({
+  Bucket: "tiffinyapp",
+  Key: filekey
+},function (err,data){})
+}
 
 app.use(bodyParser.json());
 app.use("/images", express.static(path.join(__dirname, "images")));
@@ -103,7 +109,7 @@ app.set( 'port', ( process.env.PORT || 3002 ));
 
 const dbConnect = async () => {
   
-console.log("processssssssssssssssssssss",process.env)
+//console.log("processssssssssssssssssssss",process.env)
   try {
     const dbresult=await mongoose.connect(
      `mongodb+srv://slk:slk123@cluster0.d0twn.mongodb.net/tiffinyApp?retryWrites=true&w=majority`, {

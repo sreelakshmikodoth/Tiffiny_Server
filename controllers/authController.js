@@ -28,7 +28,6 @@ exports.signupUser = (req, res, next) => {
     throw error;
   }
 const {email,firstName,password,lastName,role}=req.body
-console.log("Process",process.env)
   let token;
 
   if (role !== "ROLE_USER") {
@@ -168,11 +167,11 @@ exports.signupSeller = (req, res, next) => {
     error.statusCode = 422;
     throw error;
   }
-  let arrayFiles = [];
-     arrayFiles = req.files.map((pic)=>{
-        return pic.location
+   let arrayFiles = [];
 
-      })
+  arrayFiles = req.files.map(pic => {
+    return {img:pic.location,imgKey:pic.key};
+  });
   const { email,name,password,tags,role,payment,minOrderAmount,costForOne,phoneNo,street,aptName,formattedAddress,lat,lng,locality,zip} =req.body;
    const paymentArray = payment.split(" ");
 
@@ -244,7 +243,6 @@ exports.signupSeller = (req, res, next) => {
 
     })
     .catch((err) => {
-      console.log("flop",err)
       if (!err.statusCode) err.statusCode = 500;
       next(err);
     });

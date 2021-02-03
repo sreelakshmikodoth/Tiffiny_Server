@@ -6,6 +6,7 @@ const { validationResult } = require("express-validator");
 const Item = require("../models/item");
 const Seller = require("../models/seller");
 const Account = require("../models/account");
+const app = require("../app.js");
 
 exports.createItem = (req, res, next) => {
   const errors = validationResult(req);
@@ -23,8 +24,10 @@ exports.createItem = (req, res, next) => {
   let arrayFiles = [];
 
   arrayFiles = req.files.map(pic => {
-    return pic.path;
+    console.log(pic)
+    return {img:pic.location,imgKey:pic.key};
   });
+console.log("arrayfiles",arrayFiles);
 
   const title = req.body.title;
   const fooditems = req.body.fooditems;
@@ -51,6 +54,8 @@ exports.createItem = (req, res, next) => {
         tags: tags,
         creator: creator._id
       });
+
+      console.log("this item",item);
 
       item
         .save()
@@ -122,9 +127,9 @@ exports.editItem = (req, res, next) => {
   let arrayFiles = [];
 
   arrayFiles = req.files.map(pic => {
-    return pic.location;
+    return {img:pic.location,imgKey:pic.key};
   });
-
+console.log("arrayfiles",arrayFiles);
   const title = req.body.title;
   const fooditems = req.body.fooditems;
   const price = req.body.price;
@@ -143,13 +148,16 @@ exports.editItem = (req, res, next) => {
         throw error;
       }
       console.log({ imageUrl, fetchedItem });
-      console.log("imgurl", imageUrl.length);
+      console.log("imgurl", imageUrl);
+      console.log("array of object",fetchedItem.imageUrl)
       if (imageUrl.length !== 0) {
-        let difference = fetchedItem.imageUrl.filter(
-          x => !imageUrl.includes(x)
-        );
-
-        difference && clearImage(difference);
+        const results = fetchedItem.imageUrl.filter(({ img: id1 }) => !imageUrl.some(({ img: id2 }) => id2 === id1));
+        console.log("difference is",results);
+        // let difference = fetchedItem.imageUrl.filter(
+        //   x => !imageUrl.includes(x)
+        // );
+       // console.log("difference is",difference);
+        results && clearImage(results);
       }
 
       fetchedItem.title = title;
@@ -222,11 +230,11 @@ const clearImage = filepath => {
   for (let file_path of filepath) {
     console.log("file_path", file_path);
     //console.log("file_path 222",filepath[file_path]);
-    filepath = path.join(__dirname, "../", file_path);
-    console.log("file_path 2", filepath);
+    //filepath = path.join(__dirname, "../", file_path);
+    //let fileKey = file_path.split("com/");
 
-    fs.unlink(filepath, err => {
-      console.log(err);
-    });
+   // console.log("file_path 2", fileKey);
+  app.deleteImg(file_path.imgKey);
   }
+
 };

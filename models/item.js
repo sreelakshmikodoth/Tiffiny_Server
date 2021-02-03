@@ -5,35 +5,43 @@ const itemSchema = new Schema(
   {
     title: {
       type: String,
-      required: true,
+      required: true
     },
-   fooditems: {
-    type: [String],
-   // required: true
-  },
+    fooditems: {
+      type: [String]
+      // required: true
+    },
     description: {
       type: String,
-      required: true,
+      required: true
     },
     tags: {
-      type: String,
+      type: String
     },
-    imageUrl: [{
-      type: String,
-      required: true,
-    }],
+    imageUrl: [
+      {
+        img: {
+          type: String,
+          required: true
+        },
+        imgKey: {
+          type: String,
+          required: true
+        }
+      }
+    ],
     price: {
       type: Number,
-      required: true,
+      required: true
     },
     creator: {
       type: Schema.Types.ObjectId,
       ref: "Seller",
-      required: true,
-    },
+      required: true
+    }
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 

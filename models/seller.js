@@ -8,30 +8,36 @@ const addressInfo = {
   zip: String,
   lat: Number,
   lng: Number,
-  phoneNo: Number,
+  phoneNo: Number
 };
 
 const sellerSchema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: true
     },
     tags: {
       type: String,
-      required: true,
+      required: true
     },
     formattedAddress: {
       type: String,
-      required: true,
+      required: true
     },
-  //  imageUrl: [{ img: { type: String } }],
+    //  imageUrl: [{ img: { type: String } }],
 
     imageUrl: [
-     {
-        type: String,
-        required: true,
-      },
+      {
+        img: {
+          type: String,
+          required: true
+        },
+        imgKey: {
+          type: String,
+          required: true
+        }
+      }
     ],
     address: addressInfo,
     minOrderAmount: Number,
@@ -40,11 +46,11 @@ const sellerSchema = new Schema(
       {
         type: String,
         // enum: ["CASH", "ONLINE_PAYMENT", "UPI"],
-        required: true,
-      },
+        required: true
+      }
     ],
     account: { type: Schema.Types.ObjectId, required: true, ref: "Account" },
-    items: [{ type: Schema.Types.ObjectId, ref: "Item" }],
+    items: [{ type: Schema.Types.ObjectId, ref: "Item" }]
   },
   { timestamps: true }
 );
